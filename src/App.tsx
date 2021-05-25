@@ -21,11 +21,17 @@ class App extends React.Component<{}, {
   }
 
   handleStart() {
-    this.setState({showStart: false})
+    this.setState({
+      showStart: false,
+      msg: '',
+      msg1: '',
+      msg2: '',
+      winMsg: ''
+    })
     game.startGame()
   }
 
-  handleUserChoice(choice: number) {
+  handleGame(choice: number) {
     game.handleUserChoice(choice)
     this.setState({
       msg: game.message[0],
@@ -33,6 +39,13 @@ class App extends React.Component<{}, {
       msg2: game.message[2],
       winMsg: game.winMessage
     })
+    this.handleEnd()
+  }
+
+  handleEnd() {
+    if(game.winMessage !== ''){
+      this.setState({showStart: true})
+    }
   }
 
   render() {
@@ -47,16 +60,16 @@ class App extends React.Component<{}, {
           {this.state.showStart === false &&
             <>
               <div className="game-buttons">
-                <button onClick={() => this.handleUserChoice(0)}>Rock</button>
-                <button onClick={() => this.handleUserChoice(1)}>Paper</button>
-                <button onClick={() => this.handleUserChoice(2)}>Scissors</button>
+                <button onClick={() => this.handleGame(0)}>Rock</button>
+                <button onClick={() => this.handleGame(1)}>Paper</button>
+                <button onClick={() => this.handleGame(2)}>Scissors</button>
               </div>
-              {this.state.msg}<br></br>
-              {this.state.msg1}<br></br>
-              {this.state.msg2}<br></br><br></br>
-              {this.state.winMsg}
             </>
           }
+          <h3>{this.state.msg}<br></br>
+          {this.state.msg1}<br></br>
+          {this.state.msg2}</h3>
+          <h1>{this.state.winMsg}</h1>
         </div>
       </div>
     );

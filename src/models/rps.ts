@@ -44,6 +44,8 @@ class RockPaperScissors {
         this.userScore = 0
         this.computerScore = 0
         this.counter = 0
+        this.message = []
+        this.winMessage = ''
     }
     
     getComputerMove() {
