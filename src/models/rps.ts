@@ -43,7 +43,6 @@ class RockPaperScissors {
     startGame(): void {
         this.userScore = 0
         this.computerScore = 0
-        this.counter = 0
         this.message = []
         this.winMessage = ''
     }
@@ -63,6 +62,7 @@ class RockPaperScissors {
         }
         // this.setImageFromChoice(userGuess)
         let computerGuess: guess = this.getComputerMove()
+        console.log(computerGuess)
         // this.setImageFromChoice(computerGuess)
         let winner: guess = this.calculateWinner(userGuess, computerGuess)
         if (winner.player === "User") this.userScore++
