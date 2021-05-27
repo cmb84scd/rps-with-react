@@ -62,7 +62,6 @@ class RockPaperScissors {
         }
         // this.setImageFromChoice(userGuess)
         let computerGuess: guess = this.getComputerMove()
-        console.log(computerGuess)
         // this.setImageFromChoice(computerGuess)
         let winner: guess = this.calculateWinner(userGuess, computerGuess)
         if (winner.player === "User") this.userScore++
@@ -95,8 +94,6 @@ class RockPaperScissors {
             case moves.Scissors:
                 if (guessTwo.move === moves.Rock) return guessTwo
                 break
-            // default:
-            //     return guessOne
         }
         return guessOne
     }
