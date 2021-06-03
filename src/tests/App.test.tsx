@@ -51,9 +51,10 @@ describe('playing the game', () => {
   describe('playing with comp choosing scissors', () => {
     beforeEach(() => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
+      // Due to the way the spy is working, 0.8 = 2.
     });
 
-    afterEach(() => {
+    afterAll(() => {
       jest.spyOn(global.Math, 'random').mockRestore();
     });
 
@@ -70,6 +71,44 @@ describe('playing the game', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
+      expect(msgHeading).toBeInTheDocument();
+      expect(winMsgHeading).toBeInTheDocument();
+    });
+  });
+
+  describe('playing with different user/comp selections', () => {
+    afterAll(() => {
+      jest.spyOn(global.Math, 'random').mockRestore();
+    });
+
+    it('the computer wins the first play', () => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0.5); // 0.5 = 1
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper' });
+      expect(msgHeading).toBeInTheDocument();
+    });
+
+    it('the user wins the second play', () => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      jest.spyOn(global.Math, 'random').mockReturnValue(0);
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper' });
+      expect(msgHeading).toBeInTheDocument();
+    });
+
+    it('the third play and the game is drawn', () => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      jest.spyOn(global.Math, 'random').mockReturnValue(0);
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
+      fireEvent.click(screen.getByRole('button', { name: 'Scissors' }));
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
+      const winMsgHeading = screen.getByRole('heading', { name: 'You drew that round' });
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
     });
