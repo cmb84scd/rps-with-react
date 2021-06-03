@@ -7,18 +7,18 @@ describe('playing the game', () => {
   beforeEach(() => render(<App />));
 
   it('renders start game button', () => {
-    const buttonElement = screen.getByText('Start Game');
-    expect(buttonElement).toBeInTheDocument();
+    const startButton = screen.getByRole('button', { name: 'Start Game' });
+    expect(startButton).toBeInTheDocument();
   });
 
   it('renders game buttons upon clicking start game', () => {
-    fireEvent.click(screen.getByText('Start Game'));
-    const rock = screen.getByText('Rock');
-    const paper = screen.getByText('Paper');
-    const scissors = screen.getByText('Scissors');
-    expect(rock).toBeInTheDocument();
-    expect(paper).toBeInTheDocument();
-    expect(scissors).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+    const rockButton = screen.getByRole('button', { name: 'Rock' });
+    const paperButton = screen.getByRole('button', { name: 'Paper' });
+    const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
+    expect(rockButton).toBeInTheDocument();
+    expect(paperButton).toBeInTheDocument();
+    expect(scissorsButton).toBeInTheDocument();
   });
 
   describe('playing with comp choosing rock', () => {
@@ -31,20 +31,20 @@ describe('playing the game', () => {
     });
 
     it('the user wins the first play', () => {
-      fireEvent.click(screen.getByText('Start Game'));
-      fireEvent.click(screen.getByText('Paper'));
-      const msg = screen.getByText('User wins with Paper');
-      expect(msg).toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper' });
+      expect(msgHeading).toBeInTheDocument();
     });
 
     it('the user wins the second play and the game', () => {
-      fireEvent.click(screen.getByText('Start Game'));
-      fireEvent.click(screen.getByText('Paper'));
-      fireEvent.click(screen.getByText('Paper'));
-      const msg = screen.getByText('User wins with PaperUser wins with Paper');
-      const winMsg = screen.getByText('You won that round!');
-      expect(msg).toBeInTheDocument();
-      expect(winMsg).toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper User wins with Paper' });
+      const winMsgHeading = screen.getByRole('heading', { name: 'You won that round!' });
+      expect(msgHeading).toBeInTheDocument();
+      expect(winMsgHeading).toBeInTheDocument();
     });
   });
 });
