@@ -6,21 +6,43 @@ describe('playing the game', () => {
 
   beforeEach(() => render(<App />));
 
-  it('renders start game button', () => {
-    const startButton = screen.getByRole('button', { name: 'Start Game' });
-    expect(startButton).toBeInTheDocument();
-  });
+  describe('rendering right buttons at right time', () => {
+    it('renders start game button when page loads', () => {
+      const startButton = screen.getByRole('button', { name: 'Start Game' });
+      expect(startButton).toBeInTheDocument();
+    });
 
-  it('renders game buttons upon clicking start game', () => {
-    userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+    it('renders game buttons upon clicking start game', () => {
+      const startButton = screen.getByRole('button', { name: 'Start Game' });
+      userEvent.click(startButton);
 
-    const rockButton = screen.getByRole('button', { name: 'Rock' });
-    const paperButton = screen.getByRole('button', { name: 'Paper' });
-    const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
+      const rockButton = screen.getByRole('button', { name: 'Rock' });
+      const paperButton = screen.getByRole('button', { name: 'Paper' });
+      const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
 
-    expect(rockButton).toBeInTheDocument();
-    expect(paperButton).toBeInTheDocument();
-    expect(scissorsButton).toBeInTheDocument();
+      expect(rockButton).toBeInTheDocument();
+      expect(paperButton).toBeInTheDocument();
+      expect(scissorsButton).toBeInTheDocument();
+      expect(startButton).not.toBeInTheDocument();
+    });
+
+    it('renders start game button when game ends', () => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0);
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+
+      const rockButton = screen.getByRole('button', { name: 'Rock' });
+      const paperButton = screen.getByRole('button', { name: 'Paper' });
+      const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
+
+      userEvent.click(paperButton);
+      userEvent.click(paperButton);
+
+      expect(screen.getByRole('button', { name: 'Start Game' })).toBeInTheDocument();
+      expect(rockButton).not.toBeInTheDocument();
+      expect(paperButton).not.toBeInTheDocument();
+      expect(scissorsButton).not.toBeInTheDocument();
+      jest.spyOn(global.Math, 'random').mockRestore();
+    });
   });
 
   describe('playing with comp choosing rock', () => {
@@ -28,7 +50,7 @@ describe('playing the game', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
     });
 
-    afterEach(() => {
+    afterAll(() => {
       jest.spyOn(global.Math, 'random').mockRestore();
     });
 
