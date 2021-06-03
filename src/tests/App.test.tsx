@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import App from '../App';
 
 describe('playing the game', () => {
@@ -12,10 +12,12 @@ describe('playing the game', () => {
   });
 
   it('renders game buttons upon clicking start game', () => {
-    fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+    userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+
     const rockButton = screen.getByRole('button', { name: 'Rock' });
     const paperButton = screen.getByRole('button', { name: 'Paper' });
     const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
+
     expect(rockButton).toBeInTheDocument();
     expect(paperButton).toBeInTheDocument();
     expect(scissorsButton).toBeInTheDocument();
@@ -31,18 +33,22 @@ describe('playing the game', () => {
     });
 
     it('the user wins the first play', () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper' });
+
       expect(msgHeading).toBeInTheDocument();
     });
 
     it('the user wins the second play and the game', () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper User wins with Paper' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You won that round!' });
+
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
     });
@@ -59,18 +65,22 @@ describe('playing the game', () => {
     });
 
     it('the computer wins the first play', () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
+
       expect(msgHeading).toBeInTheDocument();
     });
 
     it('the computer wins the second play and the game', () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
+
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
     });
@@ -83,32 +93,41 @@ describe('playing the game', () => {
 
     it('the computer wins the first play', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.5); // 0.5 = 1
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Rock' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper' });
+
       expect(msgHeading).toBeInTheDocument();
     });
 
     it('the user wins the second play', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Rock' }));
+
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper' });
+
       expect(msgHeading).toBeInTheDocument();
     });
 
     it('the third play and the game is drawn', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      userEvent.click(screen.getByRole('button', { name: 'Rock' }));
+
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
-      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+
       jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
-      fireEvent.click(screen.getByRole('button', { name: 'Scissors' }));
+      userEvent.click(screen.getByRole('button', { name: 'Scissors' }));
+
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You drew that round' });
+
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
     });
