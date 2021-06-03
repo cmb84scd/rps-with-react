@@ -47,4 +47,31 @@ describe('playing the game', () => {
       expect(winMsgHeading).toBeInTheDocument();
     });
   });
+
+  describe('playing with comp choosing scissors', () => {
+    beforeEach(() => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
+    });
+
+    afterEach(() => {
+      jest.spyOn(global.Math, 'random').mockRestore();
+    });
+
+    it('the computer wins the first play', () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
+      expect(msgHeading).toBeInTheDocument();
+    });
+
+    it('the computer wins the second play and the game', () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Scissors' });
+      const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
+      expect(msgHeading).toBeInTheDocument();
+      expect(winMsgHeading).toBeInTheDocument();
+    });
+  });
 });
