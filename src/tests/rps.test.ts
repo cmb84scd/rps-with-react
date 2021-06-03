@@ -24,7 +24,7 @@ describe('RockPaperScissors', () => {
 
         it('resets the messages', () => {
             game.message = ['You win', 'Comp wins', 'You win']
-            game.winMessage = 'You won this round'
+            game.winMessage = 'You won that round!'
             game.startGame()
             expect(game.message).toStrictEqual([])
             expect(game.winMessage).toBe('')
@@ -39,7 +39,7 @@ describe('RockPaperScissors', () => {
         afterEach(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
-        
+
         it('the user wins the first play', () => {
             game.handleUserChoice(1)
             expect(game.userScore).toBe(1)
@@ -67,7 +67,7 @@ describe('RockPaperScissors', () => {
         afterEach(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
-        
+
         it('the computer wins the first play', () => {
             game.startGame()
             game.handleUserChoice(1)
@@ -96,7 +96,7 @@ describe('RockPaperScissors', () => {
         afterEach(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
-        
+
         it('the first play is drawn', () => {
             game.startGame()
             game.handleUserChoice(1)
