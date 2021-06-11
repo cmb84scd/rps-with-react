@@ -83,11 +83,10 @@ class RockPaperScissors {
     calculateWinner(guessOne: guess, guessTwo: guess): guess {
         if (guessOne.move === guessTwo.move)
             return {player: "Neither", move: guessOne.move}
-        else if (guessOne.move === moves.Rock && guessTwo.move === moves.Paper)
-            return guessTwo
-        else if (guessOne.move === moves.Paper && guessTwo.move === moves.Scissors)
-            return guessTwo
-        else if (guessOne.move === moves.Scissors && guessTwo.move === moves.Rock)
+        else if (guessOne.move === moves.Rock && guessTwo.move === moves.Paper ||
+            guessOne.move === moves.Paper && guessTwo.move === moves.Scissors ||
+            guessOne.move === moves.Scissors && guessTwo.move === moves.Rock
+            )
             return guessTwo
         else
             return guessOne
