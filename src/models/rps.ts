@@ -1,13 +1,3 @@
-// declare function loadImage(imgPath: string): void
-// declare function image(
-//     imgPath: string,
-//     xPos: number,
-//     yPos: number,
-//     width: number,
-//     height: number
-// ): void
-// declare function millis(): number
-
 interface guess {
     move: number // 0, 1 or 2
     player: string // "User" or "Computer"
@@ -23,21 +13,17 @@ class RockPaperScissors {
     userScore: number
     computerScore: number
     counter: number
-    // imageList: any[]
-    // leftImage: string
-    // rightImage: string
     message: string[]
     winMessage: string
+    computerGuess: guess
 
     constructor() {
         this.userScore = 0
         this.computerScore = 0
         this.counter = 0
-        // this.imageList = []
-        // this.leftImage = ''
-        // this.rightImage = ''
         this.message = []
         this.winMessage = ''
+        this.computerGuess = {} as any
     }
 
     startGame(): void {
@@ -45,6 +31,7 @@ class RockPaperScissors {
         this.computerScore = 0
         this.message = []
         this.winMessage = ''
+        this.computerGuess = {} as any
     }
 
     getComputerMove() {
@@ -60,10 +47,8 @@ class RockPaperScissors {
             move: choice,
             player: "User"
         }
-        // this.setImageFromChoice(userGuess)
-        let computerGuess: guess = this.getComputerMove()
-        // this.setImageFromChoice(computerGuess)
-        let winner: guess = this.calculateWinner(userGuess, computerGuess)
+        this.computerGuess = this.getComputerMove()
+        let winner: guess = this.calculateWinner(userGuess, this.computerGuess)
         if (winner.player === "User") this.userScore++
         if (winner.player === "Computer") this.computerScore++
         this.message.push(`${winner.player} wins with ${moves[winner.move]}`)
@@ -83,48 +68,13 @@ class RockPaperScissors {
     calculateWinner(guessOne: guess, guessTwo: guess): guess {
         if (guessOne.move === guessTwo.move)
             return {player: "Neither", move: guessOne.move}
-        else if (guessOne.move === moves.Rock && guessTwo.move === moves.Paper ||
-            guessOne.move === moves.Paper && guessTwo.move === moves.Scissors ||
-            guessOne.move === moves.Scissors && guessTwo.move === moves.Rock
-            )
+        else if ((guessOne.move === moves.Rock && guessTwo.move === moves.Paper) ||
+            (guessOne.move === moves.Paper && guessTwo.move === moves.Scissors) ||
+            (guessOne.move === moves.Scissors && guessTwo.move === moves.Rock))
             return guessTwo
         else
             return guessOne
     }
-
-    // setImageFromChoice(choice: guess): void {
-    //     if (choice.player === "User") {
-    //         this.leftImage = this.imageList[choice.move]
-    //     } else {
-    //         this.rightImage = this.imageList[choice.move]
-    //     }
-    // }
-
-    // preload(): void {
-    //     this.imageList = [loadImage('../../img/rock.png'), loadImage('../../img/paper.png'), loadImage('../../img/scissors.png')]
-    // }
-
-    // draw(): void {
-    //     var bobAmount = Math.sin(millis() / 60) * 3
-    //     if (this.leftImage) {
-    //         image(
-    //             this.leftImage,
-    //             100,
-    //             window.innerHeight / 2 - 263 + 100 + bobAmount,
-    //             263,
-    //             263
-    //         )
-    //     }
-    //     if (this.rightImage) {
-    //         image(
-    //             this.rightImage,
-    //             window.innerWidth - 263 - 100,
-    //             window.innerHeight / 2 - 263 + 100 + bobAmount,
-    //             263,
-    //             263
-    //         )
-    //     }
-    // }
 }
 let game = new RockPaperScissors()
 export default game
