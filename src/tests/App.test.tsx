@@ -34,8 +34,8 @@ describe('playing the game', () => {
       const paperButton = screen.getByRole('button', { name: 'Paper' });
       const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
 
-      userEvent.click(paperButton);
-      userEvent.click(paperButton);
+      userEvent.click(scissorsButton);
+      userEvent.click(scissorsButton);
 
       expect(screen.getByRole('button', { name: 'Start Game' })).toBeInTheDocument();
       expect(rockButton).not.toBeInTheDocument();
@@ -76,7 +76,7 @@ describe('playing the game', () => {
     });
   });
 
-  describe('playing with comp choosing scissors', () => {
+  describe('playing with comp choosing scissors, then rock', () => {
     beforeEach(() => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
       // Due to the way the spy is working, 0.8 = 2.
@@ -98,9 +98,10 @@ describe('playing the game', () => {
     it('the computer wins the second play and the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
-      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      jest.spyOn(global.Math, 'random').mockReturnValue(0);
+      userEvent.click(screen.getByRole('button', { name: 'Scissors' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Scissors' });
+      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Rock' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
 
       expect(msgHeading).toBeInTheDocument();

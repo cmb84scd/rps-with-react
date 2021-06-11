@@ -36,7 +36,7 @@ describe('RockPaperScissors', () => {
             jest.spyOn(global.Math, 'random').mockReturnValue(0);
         });
 
-        afterEach(() => {
+        afterAll(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
 
@@ -58,17 +58,13 @@ describe('RockPaperScissors', () => {
         });
     });
 
-    describe('handleUserChoice with comp choosing Scissors', () => {
-        beforeEach(() => {
-            jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
-            // Due to the way the spy is working, 0.8 = 2.
-        });
-
-        afterEach(() => {
+    describe('handleUserChoice with comp choosing Scissors, then paper', () => {
+        afterAll(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
 
         it('the computer wins the first play', () => {
+            jest.spyOn(global.Math, 'random').mockReturnValue(0.8); // 0.8 = 2
             game.startGame()
             game.handleUserChoice(1)
             expect(game.userScore).toBe(0)
@@ -78,47 +74,46 @@ describe('RockPaperScissors', () => {
         });
 
         it('the computer wins the second play and the game', () => {
-            game.handleUserChoice(1)
+            jest.spyOn(global.Math, 'random').mockReturnValue(0.5); // 0.5 = 1
+            game.handleUserChoice(0)
             expect(game.userScore).toBe(0)
             expect(game.computerScore).toStrictEqual(2)
-            expect(game.message).toStrictEqual(['Computer wins with Scissors', 'Computer wins with Scissors'])
+            expect(game.message).toStrictEqual(['Computer wins with Scissors', 'Computer wins with Paper'])
             expect(game.counter).toBe(0)
             expect(game.winMessage).toBe('You lost that round!')
         });
     });
 
-    describe('handleUserChoice with comp choosing Paper', () => {
-        beforeEach(() => {
-            jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-            // Due to the way the spy is working, 0.5 = 1.
-        });
-
-        afterEach(() => {
+    describe('handleUserChoice with different comp selections', () => {
+        afterAll(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
         });
 
-        it('the first play is drawn', () => {
+        it('the computer wins the first play with rock', () => {
+            jest.spyOn(global.Math, 'random').mockReturnValue(0);
             game.startGame()
-            game.handleUserChoice(1)
+            game.handleUserChoice(2)
             expect(game.userScore).toBe(0)
-            expect(game.computerScore).toStrictEqual(0)
-            expect(game.message).toStrictEqual(['Neither wins with Paper'])
+            expect(game.computerScore).toStrictEqual(1)
+            expect(game.message).toStrictEqual(['Computer wins with Rock'])
             expect(game.counter).toBe(1)
         });
 
-        it('the second play is drawn', () => {
-            game.handleUserChoice(1)
-            expect(game.userScore).toBe(0)
-            expect(game.computerScore).toStrictEqual(0)
-            expect(game.message).toStrictEqual(['Neither wins with Paper', 'Neither wins with Paper'])
+        it('the player wins the second play', () => {
+            jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
+            game.handleUserChoice(0)
+            expect(game.userScore).toBe(1)
+            expect(game.computerScore).toStrictEqual(1)
+            expect(game.message).toStrictEqual(['Computer wins with Rock', 'User wins with Rock'])
             expect(game.counter).toBe(2)
         });
 
         it('the third play and the game is drawn', () => {
+            jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
             game.handleUserChoice(1)
-            expect(game.userScore).toBe(0)
-            expect(game.computerScore).toStrictEqual(0)
-            expect(game.message).toStrictEqual(['Neither wins with Paper', 'Neither wins with Paper', 'Neither wins with Paper'])
+            expect(game.userScore).toBe(1)
+            expect(game.computerScore).toStrictEqual(1)
+            expect(game.message).toStrictEqual(['Computer wins with Rock', 'User wins with Rock', 'Neither wins with Paper'])
             expect(game.counter).toBe(0)
             expect(game.winMessage).toBe('You drew that round')
         });
