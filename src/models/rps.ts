@@ -46,7 +46,7 @@ class RockPaperScissors {
         this.message = []
         this.winMessage = ''
     }
-    
+
     getComputerMove() {
         let move = Math.floor(Math.random() * 3)
         return {
@@ -54,7 +54,7 @@ class RockPaperScissors {
             player: "Computer"
         }
     }
-    
+
     handleUserChoice(choice: number): void {
         let userGuess: guess = {
             move: choice,
@@ -69,7 +69,7 @@ class RockPaperScissors {
         this.message.push(`${winner.player} wins with ${moves[winner.move]}`)
         this.checkRoundProgress()
     }
-    
+
     checkRoundProgress(): void {
         this.counter++
         if (this.userScore === 2 || this.computerScore === 2 || this.counter === 3) {
@@ -83,19 +83,14 @@ class RockPaperScissors {
     calculateWinner(guessOne: guess, guessTwo: guess): guess {
         if (guessOne.move === guessTwo.move)
             return {player: "Neither", move: guessOne.move}
-    
-        switch (guessOne.move) {
-            case moves.Rock:
-                if (guessTwo.move === moves.Paper) return guessTwo
-                break
-            case moves.Paper:
-                if (guessTwo.move === moves.Scissors) return guessTwo
-                break
-            case moves.Scissors:
-                if (guessTwo.move === moves.Rock) return guessTwo
-                break
-        }
-        return guessOne
+        else if (guessOne.move === moves.Rock && guessTwo.move === moves.Paper)
+            return guessTwo
+        else if (guessOne.move === moves.Paper && guessTwo.move === moves.Scissors)
+            return guessTwo
+        else if (guessOne.move === moves.Scissors && guessTwo.move === moves.Rock)
+            return guessTwo
+        else
+            return guessOne
     }
 
     // setImageFromChoice(choice: guess): void {
