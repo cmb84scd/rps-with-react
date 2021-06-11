@@ -59,8 +59,12 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper' });
+      const userImg = screen.getByRole('img', { name: 'user-img' })
+      const compImg = screen.getByRole('img', { name: 'comp-img' })
 
       expect(msgHeading).toBeInTheDocument();
+      expect(userImg).toHaveAttribute('src', 'paper.png')
+      expect(compImg).toHaveAttribute('src', 'rock.png')
     });
 
     it('the user wins the second play and the game', () => {

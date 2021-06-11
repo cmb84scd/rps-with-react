@@ -9,9 +9,10 @@ describe('RockPaperScissors', () => {
             expect(game.counter).toBe(0)
         });
 
-        it('the messages are empty', () => {
+        it('the messages and comp guess are empty', () => {
             expect(game.message).toStrictEqual([])
             expect(game.winMessage).toBe('')
+            expect(game.computerGuess).toStrictEqual({})
         });
 
         it('resets the scores to zero', () => {
@@ -22,12 +23,14 @@ describe('RockPaperScissors', () => {
             expect(game.computerScore).toBe(0)
         });
 
-        it('resets the messages', () => {
+        it('resets the messages and comp guess', () => {
             game.message = ['You win', 'Comp wins', 'You win']
             game.winMessage = 'You won that round!'
+            game.computerGuess = {move: 1, player: 'Computer'}
             game.startGame()
             expect(game.message).toStrictEqual([])
             expect(game.winMessage).toBe('')
+            expect(game.computerGuess).toStrictEqual({})
         });
     });
 
@@ -46,6 +49,7 @@ describe('RockPaperScissors', () => {
             expect(game.computerScore).toBe(0)
             expect(game.message).toStrictEqual(['User wins with Paper'])
             expect(game.counter).toBe(1)
+            expect(game.computerGuess).toStrictEqual({move: 0, player: 'Computer'})
         });
 
         it('the user wins the second play and the game', () => {

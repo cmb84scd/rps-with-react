@@ -97,12 +97,16 @@ class App extends React.Component<{}, {
               </div>
             </>
           }
-          <h3>{this.state.msg}<br></br>
-          {this.state.msg1}<br></br>
-          {this.state.msg2}</h3>
-          <h1>{this.state.winMsg}</h1>
-          <div className="left-image"><img src={this.state.userImage} alt=""></img></div>
-          <div className="right-image"><img src={this.state.compImage} alt=""></img></div>
+          {this.state.userImage !== "" &&
+            <>
+            <h3>{this.state.msg}<br></br>
+            {this.state.msg1}<br></br>
+            {this.state.msg2}</h3>
+            <h1>{this.state.winMsg}</h1>
+            <div className="left-image"><img src={this.state.userImage} alt="user-img"></img></div>
+            <div className="right-image"><img src={this.state.compImage} alt="comp-img"></img></div>
+            </>
+          }
         </div>
       </div>
     );
