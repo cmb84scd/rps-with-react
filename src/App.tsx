@@ -12,7 +12,8 @@ class App extends React.Component<{}, {
   msg2: string,
   winMsg: string,
   userImage: string,
-  compImage: string }> {
+  compImage: string
+}> {
 
   constructor(props: any) {
     super(props);
@@ -53,29 +54,29 @@ class App extends React.Component<{}, {
     this.handleEnd()
   }
 
-  renderUserImage(choice: number){
-    if(choice === 0){
-      this.setState({userImage: rock})
-    }else if(choice === 1){
-      this.setState({userImage: paper})
-    }else{
-      this.setState({userImage: scissors})
+  renderUserImage(choice: number) {
+    if (choice === 0) {
+      this.setState({ userImage: rock })
+    } else if (choice === 1) {
+      this.setState({ userImage: paper })
+    } else {
+      this.setState({ userImage: scissors })
     }
   }
 
-  renderCompImage(){
-    if(game.computerGuess.move === 0){
-      this.setState({compImage: rock})
-    }else if(game.computerGuess.move === 1){
-      this.setState({compImage: paper})
-    }else{
-      this.setState({compImage: scissors})
+  renderCompImage() {
+    if (game.computerGuess.move === 0) {
+      this.setState({ compImage: rock })
+    } else if (game.computerGuess.move === 1) {
+      this.setState({ compImage: paper })
+    } else {
+      this.setState({ compImage: scissors })
     }
   }
 
   handleEnd() {
-    if(game.winMessage !== ''){
-      this.setState({showStart: true})
+    if (game.winMessage !== '') {
+      this.setState({ showStart: true })
     }
   }
 
@@ -99,12 +100,12 @@ class App extends React.Component<{}, {
           }
           {this.state.userImage !== "" &&
             <>
-            <h3>{this.state.msg}<br></br>
-            {this.state.msg1}<br></br>
-            {this.state.msg2}</h3>
-            <h1>{this.state.winMsg}</h1>
-            <div className="left-image"><img src={this.state.userImage} alt="user-img"></img></div>
-            <div className="right-image"><img src={this.state.compImage} alt="comp-img"></img></div>
+              <h3>{this.state.msg}<br></br>
+                {this.state.msg1}<br></br>
+                {this.state.msg2}</h3>
+              <h1>{this.state.winMsg}</h1>
+              <div className="left-image"><img src={this.state.userImage} alt="user-img"></img></div>
+              <div className="right-image"><img src={this.state.compImage} alt="comp-img"></img></div>
             </>
           }
         </div>
