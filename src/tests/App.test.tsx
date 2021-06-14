@@ -95,8 +95,12 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
+      const userImg = screen.getByRole('img', { name: 'user-img' })
+      const compImg = screen.getByRole('img', { name: 'comp-img' })
 
       expect(msgHeading).toBeInTheDocument();
+      expect(userImg).toHaveAttribute('src', 'paper.png')
+      expect(compImg).toHaveAttribute('src', 'scissors.png')
     });
 
     it('the computer wins the second play and the game', () => {
@@ -107,9 +111,13 @@ describe('playing the game', () => {
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Rock' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
+      const userImg = screen.getByRole('img', { name: 'user-img' })
+      const compImg = screen.getByRole('img', { name: 'comp-img' })
 
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
+      expect(userImg).toHaveAttribute('src', 'scissors.png')
+      expect(compImg).toHaveAttribute('src', 'rock.png')
     });
   });
 
@@ -124,8 +132,12 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Rock' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper' });
+      const userImg = screen.getByRole('img', { name: 'user-img' })
+      const compImg = screen.getByRole('img', { name: 'comp-img' })
 
       expect(msgHeading).toBeInTheDocument();
+      expect(userImg).toHaveAttribute('src', 'rock.png')
+      expect(compImg).toHaveAttribute('src', 'paper.png')
     });
 
     it('the user wins the second play', () => {
@@ -154,9 +166,13 @@ describe('playing the game', () => {
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You drew that round' });
+      const userImg = screen.getByRole('img', { name: 'user-img' })
+      const compImg = screen.getByRole('img', { name: 'comp-img' })
 
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
+      expect(userImg).toHaveAttribute('src', 'scissors.png')
+      expect(compImg).toHaveAttribute('src', 'scissors.png')
     });
   });
 });
