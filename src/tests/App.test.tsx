@@ -52,8 +52,8 @@ describe('playing the game', () => {
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Rock Computer wins with Rock' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-scissors' });
+      const compImg = screen.getByRole('img', { name: 'comp-rock' });
 
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
 
@@ -79,8 +79,8 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-paper' });
+      const compImg = screen.getByRole('img', { name: 'comp-rock' });
 
       expect(msgHeading).toBeInTheDocument();
       expect(userImg).toHaveAttribute('src', 'paper.png');
@@ -115,8 +115,8 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-paper' });
+      const compImg = screen.getByRole('img', { name: 'comp-scissors' });
 
       expect(msgHeading).toBeInTheDocument();
       expect(userImg).toHaveAttribute('src', 'paper.png');
@@ -131,8 +131,8 @@ describe('playing the game', () => {
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Rock' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-scissors' });
+      const compImg = screen.getByRole('img', { name: 'comp-rock' });
 
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
@@ -152,8 +152,8 @@ describe('playing the game', () => {
       userEvent.click(screen.getByRole('button', { name: 'Rock' }));
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-rock' });
+      const compImg = screen.getByRole('img', { name: 'comp-paper' });
 
       expect(msgHeading).toBeInTheDocument();
       expect(userImg).toHaveAttribute('src', 'rock.png');
@@ -186,8 +186,8 @@ describe('playing the game', () => {
 
       const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You drew that round' });
-      const userImg = screen.getByRole('img', { name: 'user-img' });
-      const compImg = screen.getByRole('img', { name: 'comp-img' });
+      const userImg = screen.getByRole('img', { name: 'user-scissors' });
+      const compImg = screen.getByRole('img', { name: 'comp-scissors' });
 
       expect(msgHeading).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();

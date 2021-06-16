@@ -11,8 +11,8 @@ class App extends React.Component<{}, {
   msg1: string,
   msg2: string,
   winMsg: string,
-  userImage: string,
-  compImage: string
+  userImage: string[],
+  compImage: string[]
 }> {
 
   constructor(props: any) {
@@ -23,8 +23,8 @@ class App extends React.Component<{}, {
       msg1: '',
       msg2: '',
       winMsg: '',
-      userImage: '',
-      compImage: ''
+      userImage: [],
+      compImage: []
     }
   }
 
@@ -35,8 +35,8 @@ class App extends React.Component<{}, {
       msg1: '',
       msg2: '',
       winMsg: '',
-      userImage: '',
-      compImage: ''
+      userImage: [],
+      compImage: []
     })
     game.startGame()
   }
@@ -56,21 +56,21 @@ class App extends React.Component<{}, {
 
   renderUserImage(choice: number) {
     if (choice === 0) {
-      this.setState({ userImage: rock })
+      this.setState({ userImage: [rock, 'user-rock'] })
     } else if (choice === 1) {
-      this.setState({ userImage: paper })
+      this.setState({ userImage: [paper, 'user-paper'] })
     } else {
-      this.setState({ userImage: scissors })
+      this.setState({ userImage: [scissors, 'user-scissors'] })
     }
   }
 
   renderCompImage() {
     if (game.computerGuess.move === 0) {
-      this.setState({ compImage: rock })
+      this.setState({ compImage: [rock, 'comp-rock'] })
     } else if (game.computerGuess.move === 1) {
-      this.setState({ compImage: paper })
+      this.setState({ compImage: [paper, 'comp-paper'] })
     } else {
-      this.setState({ compImage: scissors })
+      this.setState({ compImage: [scissors, 'comp-scissors'] })
     }
   }
 
@@ -98,17 +98,17 @@ class App extends React.Component<{}, {
               </div>
             </>
           }
-          {this.state.userImage !== "" &&
+          {this.state.msg !== "" &&
             <>
               <h3>{this.state.msg}<br></br>
                 {this.state.msg1}<br></br>
                 {this.state.msg2}</h3>
               <h1>{this.state.winMsg}</h1>
-              <div className="left-image"><img src={this.state.userImage} alt="user-img"></img></div>
-              <div className="right-image"><img src={this.state.compImage} alt="comp-img"></img></div>
+              <div className="left-image"><img src={this.state.userImage[0]} alt={this.state.userImage[1]}></img></div>
+              <div className="right-image"><img src={this.state.compImage[0]} alt={this.state.compImage[1]}></img></div>
             </>
           }
-        </div>
+          </div>
       </div>
     );
   }
