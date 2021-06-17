@@ -108,7 +108,7 @@ class App extends React.Component<{}, {
               <div className="right-image"><img src={this.state.compImage[0]} alt={this.state.compImage[1]}></img></div>
             </>
           }
-          </div>
+        </div>
       </div>
     );
   }
