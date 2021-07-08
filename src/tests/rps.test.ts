@@ -34,6 +34,19 @@ describe('RockPaperScissors', () => {
         });
     });
 
+    describe('setting username', () => {
+        it('allows the user to enter their name', () => {
+            game.setUserName('Cat')
+            expect(game.userName).toBe('Cat')
+            game.userName = 'User'
+        });
+
+        it('defaults to User if no name is entered', () => {
+            game.setUserName('')
+            expect(game.userName).toBe('User')
+        });
+    });
+
     describe('handleUserChoice with comp choosing Rock', () => {
         beforeEach(() => {
             jest.spyOn(global.Math, 'random').mockReturnValue(0);
@@ -41,13 +54,15 @@ describe('RockPaperScissors', () => {
 
         afterAll(() => {
             jest.spyOn(global.Math, 'random').mockRestore();
+            game.userName = 'User'
         });
 
         it('the user wins the first play', () => {
+            game.setUserName('Cat')
             game.handleUserChoice(1)
             expect(game.userScore).toBe(1)
             expect(game.computerScore).toBe(0)
-            expect(game.message).toStrictEqual(['User wins with Paper'])
+            expect(game.message).toStrictEqual(['Cat wins with Paper'])
             expect(game.counter).toBe(1)
             expect(game.computerGuess).toStrictEqual({move: 0, player: 'Computer'})
         });
@@ -56,7 +71,7 @@ describe('RockPaperScissors', () => {
             game.handleUserChoice(1)
             expect(game.userScore).toBe(2)
             expect(game.computerScore).toBe(0)
-            expect(game.message).toStrictEqual(['User wins with Paper', 'User wins with Paper'])
+            expect(game.message).toStrictEqual(['Cat wins with Paper', 'Cat wins with Paper'])
             expect(game.counter).toBe(0)
             expect(game.winMessage).toBe('You won that round!')
         });

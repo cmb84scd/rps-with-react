@@ -16,6 +16,7 @@ class RockPaperScissors {
     message: string[]
     winMessage: string
     computerGuess: guess
+    userName: string
 
     constructor() {
         this.userScore = 0
@@ -24,6 +25,7 @@ class RockPaperScissors {
         this.message = []
         this.winMessage = ''
         this.computerGuess = {} as any
+        this.userName = 'User'
     }
 
     startGame(): void {
@@ -32,6 +34,12 @@ class RockPaperScissors {
         this.message = []
         this.winMessage = ''
         this.computerGuess = {} as any
+    }
+
+    setUserName(name: string) {
+        if(name !== '') {
+            this.userName = name
+        }
     }
 
     getComputerMove() {
@@ -45,11 +53,11 @@ class RockPaperScissors {
     handleUserChoice(choice: number): void {
         let userGuess: guess = {
             move: choice,
-            player: "User"
+            player: this.userName
         }
         this.computerGuess = this.getComputerMove()
         let winner: guess = this.calculateWinner(userGuess, this.computerGuess)
-        if (winner.player === "User") this.userScore++
+        if (winner.player === this.userName) this.userScore++
         if (winner.player === "Computer") this.computerScore++
         this.message.push(`${winner.player} wins with ${moves[winner.move]}`)
         this.checkRoundProgress()
