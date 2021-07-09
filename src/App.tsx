@@ -12,7 +12,8 @@ class App extends React.Component<{}, {
   msg2: string,
   winMsg: string,
   userImage: string[],
-  compImage: string[]
+  compImage: string[],
+  userName: string
 }> {
 
   constructor(props: any) {
@@ -24,7 +25,8 @@ class App extends React.Component<{}, {
       msg2: '',
       winMsg: '',
       userImage: [],
-      compImage: []
+      compImage: [],
+      userName: ''
     }
   }
 
@@ -38,6 +40,7 @@ class App extends React.Component<{}, {
       userImage: [],
       compImage: []
     })
+    game.setUserName(this.state.userName)
     game.startGame()
   }
 
@@ -85,9 +88,17 @@ class App extends React.Component<{}, {
       <div className="App">
         <div className="game-wrapper">
           {this.state.showStart === true &&
-            <button onClick={() => this.handleStart()} className="start-button">
-              Start Game
-            </button>
+            <>
+              <h1>Rock Paper Scissors</h1>
+              <h1>Let's Play!</h1>
+              <h3>Please enter your name for a more personal experience:</h3>
+              <form>
+                <input type="text" onChange={(e) => this.setState({ userName: e.currentTarget.value })}></input><br></br>
+                <button onClick={() => this.handleStart()} className="start-button">
+                  Start Game
+                </button>
+              </form>
+            </>
           }
           {this.state.showStart === false &&
             <>
