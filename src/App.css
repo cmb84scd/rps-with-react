@@ -11,6 +11,11 @@ button {
   padding: 0.5rem;
   margin: 1rem 0.5rem;
 }
+input {
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+}
 .output {
   font-size: 2rem;
   font-weight: bold;
