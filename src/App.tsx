@@ -92,16 +92,18 @@ class App extends React.Component<{}, {
               <h1>Rock Paper Scissors</h1>
               <h1>Let's Play!</h1>
               <h3>Please enter your name for a more personal experience:</h3>
-              <form>
-                <input type="text" onChange={(e) => this.setState({ userName: e.currentTarget.value })}></input><br></br>
-                <button onClick={() => this.handleStart()} className="start-button">
-                  Start Game
-                </button>
-              </form>
+              <input type="text" value={this.state.userName} onChange={(e) => this.setState({ userName: e.currentTarget.value })}></input><br></br>
+              <button onClick={() => this.handleStart()} className="start-button">Start Game</button>
             </>
           }
           {this.state.showStart === false &&
             <>
+              {this.state.userName !== '' &&
+                <h2>{this.state.userName} vs Computer!<br></br><br></br>It's a best of 3 game, so make your choice(s) to play<br></br>Rock Paper Scissors!</h2>
+              }
+              {this.state.userName === '' &&
+                <h2>User vs Computer!<br></br><br></br>It's a best of 3 game, so make your choice(s) to play<br></br>Rock Paper Scissors!</h2>
+              }
               <div className="game-buttons">
                 <button onClick={() => this.handleGame(0)}>Rock</button>
                 <button onClick={() => this.handleGame(1)}>Paper</button>

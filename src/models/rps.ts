@@ -37,7 +37,9 @@ class RockPaperScissors {
     }
 
     setUserName(name: string) {
-        if(name !== '') {
+        if(name === '') {
+            this.userName = 'User'
+        }else{
             this.userName = name
         }
     }

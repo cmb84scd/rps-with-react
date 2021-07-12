@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import App from '../App';
+import game from '../models/rps';
 
 describe('playing the game', () => {
 
@@ -65,6 +66,21 @@ describe('playing the game', () => {
     });
   });
 
+  describe('setting an optional username', () => {
+    it('allows you to set a username', () => {
+      userEvent.type(screen.getByRole('textbox'), 'Cat');
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      const heading = screen.getByRole('heading', { name: "Cat vs Computer! It's a best of 3 game, so make your choice(s) to play Rock Paper Scissors!" });
+      expect(heading).toBeInTheDocument();
+    });
+
+    it('defaults to User if no name is entered', () => {
+      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
+      const heading = screen.getByRole('heading', { name: "User vs Computer! It's a best of 3 game, so make your choice(s) to play Rock Paper Scissors!" });
+      expect(heading).toBeInTheDocument();
+    });
+  });
+
   describe('playing with comp choosing rock', () => {
     beforeEach(() => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
@@ -75,10 +91,11 @@ describe('playing the game', () => {
     });
 
     it('the user wins the first play', () => {
+      userEvent.type(screen.getByRole('textbox'), 'Cat');
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper' });
+      const msgHeading = screen.getByRole('heading', { name: 'Cat wins with Paper' });
       const userImg = screen.getByRole('img', { name: 'user-paper' });
       const compImg = screen.getByRole('img', { name: 'comp-rock' });
 
@@ -88,11 +105,12 @@ describe('playing the game', () => {
     });
 
     it('the user wins the second play and the game', () => {
+      userEvent.type(screen.getByRole('textbox'), 'Cat');
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'User wins with Paper User wins with Paper' });
+      const msgHeading = screen.getByRole('heading', { name: 'Cat wins with Paper Cat wins with Paper' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You won that round!' });
 
       expect(msgHeading).toBeInTheDocument();
