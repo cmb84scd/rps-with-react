@@ -8,13 +8,11 @@ describe('playing the game', () => {
   beforeEach(() => render(<App />));
 
   describe('render right buttons and clear screen at the right time', () => {
-    it('renders start game button when page loads', () => {
+    it('renders right buttons at the right time', () => {
+      jest.spyOn(global.Math, 'random').mockReturnValue(0);
       const startButton = screen.getByRole('button', { name: 'Start Game' });
       expect(startButton).toBeInTheDocument();
-    });
 
-    it('renders game buttons upon clicking start game', () => {
-      const startButton = screen.getByRole('button', { name: 'Start Game' });
       userEvent.click(startButton);
 
       const rockButton = screen.getByRole('button', { name: 'Rock' });
@@ -25,15 +23,6 @@ describe('playing the game', () => {
       expect(paperButton).toBeInTheDocument();
       expect(scissorsButton).toBeInTheDocument();
       expect(startButton).not.toBeInTheDocument();
-    });
-
-    it('renders start game button when game ends', () => {
-      jest.spyOn(global.Math, 'random').mockReturnValue(0);
-      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-
-      const rockButton = screen.getByRole('button', { name: 'Rock' });
-      const paperButton = screen.getByRole('button', { name: 'Paper' });
-      const scissorsButton = screen.getByRole('button', { name: 'Scissors' });
 
       userEvent.click(scissorsButton);
       userEvent.click(scissorsButton);
@@ -82,135 +71,100 @@ describe('playing the game', () => {
   });
 
   describe('playing with comp choosing rock', () => {
-    beforeEach(() => {
+    it('the user wins both plays and the game', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
-    });
-
-    afterAll(() => {
-      jest.spyOn(global.Math, 'random').mockRestore();
-    });
-
-    it('the user wins the first play', () => {
       userEvent.type(screen.getByRole('textbox'), 'Cat');
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Cat wins with Paper' });
+      const msgHeading1 = screen.getByRole('heading', { name: 'Cat wins with Paper' });
       const userImg = screen.getByRole('img', { name: 'user-paper' });
       const compImg = screen.getByRole('img', { name: 'comp-rock' });
 
-      expect(msgHeading).toBeInTheDocument();
+      expect(msgHeading1).toBeInTheDocument();
       expect(userImg).toHaveAttribute('src', 'paper.png');
       expect(compImg).toHaveAttribute('src', 'rock.png');
-    });
 
-    it('the user wins the second play and the game', () => {
-      userEvent.type(screen.getByRole('textbox'), 'Cat');
-      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Cat wins with Paper Cat wins with Paper' });
+      const msgHeading2 = screen.getByRole('heading', { name: 'Cat wins with Paper Cat wins with Paper' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You won that round!' });
 
-      expect(msgHeading).toBeInTheDocument();
+      expect(msgHeading2).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
+      jest.spyOn(global.Math, 'random').mockRestore();
     });
   });
 
   describe('playing with comp choosing scissors, then rock', () => {
-    beforeEach(() => {
+    it('the computer wins both plays and the game', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
       // Due to the way the spy is working, 0.8 = 2.
-    });
-
-    afterAll(() => {
-      jest.spyOn(global.Math, 'random').mockRestore();
-    });
-
-    it('the computer wins the first play', () => {
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
-      const userImg = screen.getByRole('img', { name: 'user-paper' });
-      const compImg = screen.getByRole('img', { name: 'comp-scissors' });
+      const msgHeading1 = screen.getByRole('heading', { name: 'Computer wins with Scissors' });
+      const userImg1 = screen.getByRole('img', { name: 'user-paper' });
+      const compImg1 = screen.getByRole('img', { name: 'comp-scissors' });
 
-      expect(msgHeading).toBeInTheDocument();
-      expect(userImg).toHaveAttribute('src', 'paper.png');
-      expect(compImg).toHaveAttribute('src', 'scissors.png');
-    });
+      expect(msgHeading1).toBeInTheDocument();
+      expect(userImg1).toHaveAttribute('src', 'paper.png');
+      expect(compImg1).toHaveAttribute('src', 'scissors.png');
 
-    it('the computer wins the second play and the game', () => {
-      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
       userEvent.click(screen.getByRole('button', { name: 'Scissors' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Rock' });
+      const msgHeading2 = screen.getByRole('heading', { name: 'Computer wins with Scissors Computer wins with Rock' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You lost that round!' });
-      const userImg = screen.getByRole('img', { name: 'user-scissors' });
-      const compImg = screen.getByRole('img', { name: 'comp-rock' });
+      const userImg2 = screen.getByRole('img', { name: 'user-scissors' });
+      const compImg2 = screen.getByRole('img', { name: 'comp-rock' });
 
-      expect(msgHeading).toBeInTheDocument();
+      expect(msgHeading2).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
-      expect(userImg).toHaveAttribute('src', 'scissors.png');
-      expect(compImg).toHaveAttribute('src', 'rock.png');
+      expect(userImg2).toHaveAttribute('src', 'scissors.png');
+      expect(compImg2).toHaveAttribute('src', 'rock.png');
+      jest.spyOn(global.Math, 'random').mockRestore();
     });
   });
 
   describe('playing with different user/comp selections', () => {
-    afterAll(() => {
-      jest.spyOn(global.Math, 'random').mockRestore();
-    });
-
-    it('the computer wins the first play', () => {
+    it('comp wins the first play, user the second, the third play and game is drawn', () => {
       jest.spyOn(global.Math, 'random').mockReturnValue(0.5); // 0.5 = 1
       userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
       userEvent.click(screen.getByRole('button', { name: 'Rock' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper' });
-      const userImg = screen.getByRole('img', { name: 'user-rock' });
-      const compImg = screen.getByRole('img', { name: 'comp-paper' });
+      const msgHeading1 = screen.getByRole('heading', { name: 'Computer wins with Paper' });
+      const userImg1 = screen.getByRole('img', { name: 'user-rock' });
+      const compImg1 = screen.getByRole('img', { name: 'comp-paper' });
 
-      expect(msgHeading).toBeInTheDocument();
-      expect(userImg).toHaveAttribute('src', 'rock.png');
-      expect(compImg).toHaveAttribute('src', 'paper.png');
-    });
-
-    it('the user wins the second play', () => {
-      jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      userEvent.click(screen.getByRole('button', { name: 'Rock' }));
+      expect(msgHeading1).toBeInTheDocument();
+      expect(userImg1).toHaveAttribute('src', 'rock.png');
+      expect(compImg1).toHaveAttribute('src', 'paper.png');
 
       jest.spyOn(global.Math, 'random').mockReturnValue(0);
       userEvent.click(screen.getByRole('button', { name: 'Paper' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper' });
+      const msgHeading2 = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper' });
+      const userImg2 = screen.getByRole('img', { name: 'user-paper' });
+      const compImg2 = screen.getByRole('img', { name: 'comp-rock' });
 
-      expect(msgHeading).toBeInTheDocument();
-    });
-
-    it('the third play and the game is drawn', () => {
-      jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-      userEvent.click(screen.getByRole('button', { name: 'Start Game' }));
-      userEvent.click(screen.getByRole('button', { name: 'Rock' }));
-
-      jest.spyOn(global.Math, 'random').mockReturnValue(0);
-      userEvent.click(screen.getByRole('button', { name: 'Paper' }));
+      expect(msgHeading2).toBeInTheDocument();
+      expect(userImg2).toHaveAttribute('src', 'paper.png');
+      expect(compImg2).toHaveAttribute('src', 'rock.png');
 
       jest.spyOn(global.Math, 'random').mockReturnValue(0.8);
       userEvent.click(screen.getByRole('button', { name: 'Scissors' }));
 
-      const msgHeading = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
+      const msgHeading3 = screen.getByRole('heading', { name: 'Computer wins with Paper User wins with Paper Neither wins with Scissors' });
       const winMsgHeading = screen.getByRole('heading', { name: 'You drew that round' });
-      const userImg = screen.getByRole('img', { name: 'user-scissors' });
-      const compImg = screen.getByRole('img', { name: 'comp-scissors' });
+      const userImg3 = screen.getByRole('img', { name: 'user-scissors' });
+      const compImg3 = screen.getByRole('img', { name: 'comp-scissors' });
 
-      expect(msgHeading).toBeInTheDocument();
+      expect(msgHeading3).toBeInTheDocument();
       expect(winMsgHeading).toBeInTheDocument();
-      expect(userImg).toHaveAttribute('src', 'scissors.png');
-      expect(compImg).toHaveAttribute('src', 'scissors.png');
+      expect(userImg3).toHaveAttribute('src', 'scissors.png');
+      expect(compImg3).toHaveAttribute('src', 'scissors.png');
+      jest.spyOn(global.Math, 'random').mockRestore();
     });
   });
 });
