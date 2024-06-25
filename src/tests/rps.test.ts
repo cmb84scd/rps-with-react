@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import game from "../models/rps"
 
 describe('RockPaperScissors', () => {
@@ -26,7 +25,7 @@ describe('RockPaperScissors', () => {
         it('resets the messages and comp guess', () => {
             game.message = ['You win', 'Comp wins', 'You win']
             game.winMessage = 'You won that round!'
-            game.computerGuess = {move: 1, player: 'Computer'}
+            game.computerGuess = { move: 1, player: 'Computer' }
             game.startGame()
             expect(game.message).toStrictEqual([])
             expect(game.winMessage).toBe('')
@@ -64,7 +63,7 @@ describe('RockPaperScissors', () => {
             expect(game.computerScore).toBe(0)
             expect(game.message).toStrictEqual(['Cat wins with Paper'])
             expect(game.counter).toBe(1)
-            expect(game.computerGuess).toStrictEqual({move: 0, player: 'Computer'})
+            expect(game.computerGuess).toStrictEqual({ move: 0, player: 'Computer' })
         });
 
         it('the user wins the second play and the game', () => {

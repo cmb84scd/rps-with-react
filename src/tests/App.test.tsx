@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import App from '../App';
-import game from '../models/rps';
 
 describe('playing the game', () => {
   describe('render right buttons and clear screen at the right time', () => {
