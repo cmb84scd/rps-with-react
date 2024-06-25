@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import App from '../App';
 
 describe('playing the game', () => {
+
+  afterEach(() => cleanup())
+
   describe('render right buttons and clear screen at the right time', () => {
     it('renders right buttons at the right time', async () => {
       const user = userEvent.setup()
